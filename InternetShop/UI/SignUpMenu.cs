@@ -1,6 +1,7 @@
-﻿using System;
+﻿using InternetShop.Services;
+using System;
 
-namespace InternetShop
+namespace InternetShop.UI
 {
     public class SignUpMenu
     {

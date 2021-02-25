@@ -4,7 +4,7 @@ using System.Text;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace InternetShop
+namespace InternetShop.Services
 {
     public class Twillio
     {

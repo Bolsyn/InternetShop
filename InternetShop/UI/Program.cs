@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace InternetShop
+namespace InternetShop.UI
 {
     class Program
     {
         static void Main(string[] args)
         {
-
+            
         }
     }
 }
