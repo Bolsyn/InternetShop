@@ -47,7 +47,7 @@ namespace InternetShop.UI
                 Console.ReadLine();
                 string phone = Console.ReadLine();
 
-                Twillio.SMSService(phone, code);
+                Twillio.SendSms(phone, code);
 
                 Console.Write("Напиште код который пришел на ваш телефон: ");
                 string inputCode = Console.ReadLine();
