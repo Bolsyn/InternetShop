@@ -22,9 +22,28 @@ namespace InternetShop.Data
             connection.Open();
         }
         public abstract void Insert(T entity);
-        public abstract void Update(T entity);
-        public abstract void Delete(T entity);
+        public abstract void Update(T entity, string value);
+        public abstract void Delete(T entity,string value);
         public abstract ICollection<T> Select();
+        public void ExecuteTranaction(params DbCommand[] commands)
+        {
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    foreach (var command in commands)
+                    {
+                        command.Transaction = transaction;
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+            }
+        }
         public void Dispose()
         {
             connection.Close();
