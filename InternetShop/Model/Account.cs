@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InternetShop.Model
 {
-    public class Users
+    public class Account
     {
         public int Id { get; set; }
         public string TelephoneNumber { get; set; }

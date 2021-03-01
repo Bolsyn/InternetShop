@@ -11,4 +11,10 @@
     <PackageReference Include="Twilio" Version="5.55.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\appSetting.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
