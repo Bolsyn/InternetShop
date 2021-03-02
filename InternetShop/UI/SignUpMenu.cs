@@ -7,7 +7,7 @@ namespace InternetShop.UI
 {
     public class SignUpMenu
     {
-        public void PrintSignUp()
+        public Account PrintSignUp()
         {
             Console.WriteLine("Регистрация? Нажмите 1");
             Console.WriteLine("Вход? Нажмите 2");
@@ -43,10 +43,12 @@ namespace InternetShop.UI
                     };
                     var accountDataAccess = new DataAccessAccount();
                     accountDataAccess.Insert(account);
+                    return account;
                 }
                 else
                 {
                     Console.WriteLine("Заново!");
+                    return null;
                 }
             }
             if (signUp == 2)
@@ -67,18 +69,27 @@ namespace InternetShop.UI
                 }
 
                 if (intCode == code)
-                {                    
+                {
+                    Console.WriteLine("С возвращением!");
                     var accountDataAccess = new DataAccessAccount();
-                    accountDataAccess.Select();
+
+                    var account = accountDataAccess.Select(phone);
+                    return account;
                 }
                 else
                 {
                     Console.WriteLine("Заново!");
+                    return null;
                 }
             }
             else if (signUp == 0)
             {
                 Console.WriteLine("До свидания!");
+                return null;
+            }
+            else
+            {
+                return null;
             }
         }
     }

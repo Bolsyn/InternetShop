@@ -6,7 +6,7 @@ namespace InternetShop.UI
     {
         static void Main(string[] args)
         {
-            // TODO DataAccess Users, Games, Abstuct DataAccess
+            // TODO DataAccess Games
             // TODO Model Games
             // TODO QIWI wallet
             // TODO Twilio update to DB

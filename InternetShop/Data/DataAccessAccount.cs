@@ -111,15 +111,6 @@ namespace InternetShop.Data
             {
                 command.Connection = connection;
                 command.CommandText = updateSqlScript;
-
-
-                var walletParameter = factory.CreateParameter();
-                walletParameter.DbType = System.Data.DbType.String;
-                walletParameter.Value = entity.Wallet;
-                walletParameter.ParameterName = "Wallet";
-
-                command.Parameters.Add(walletParameter);
-
                 command.ExecuteNonQuery();
             }
         }
