@@ -1,4 +1,6 @@
-﻿using InternetShop.Services;
+﻿using InternetShop.Data;
+using InternetShop.Model;
+using InternetShop.Services;
 using System;
 
 namespace InternetShop.UI
@@ -34,6 +36,13 @@ namespace InternetShop.UI
                 if (intCode == code)
                 {
                     Console.WriteLine("Поздравляю, вы зарегистрировались!");
+                    var account = new Account
+                    {
+                        TelephoneNumber = phone,
+                        Wallet = 0
+                    };
+                    var accountDataAccess = new DataAccessAccount();
+                    accountDataAccess.Insert(account);
                 }
                 else
                 {
@@ -58,8 +67,9 @@ namespace InternetShop.UI
                 }
 
                 if (intCode == code)
-                {
-                    Console.WriteLine("Поздравляю, вы зарегистрировались!");
+                {                    
+                    var accountDataAccess = new DataAccessAccount();
+                    accountDataAccess.Select();
                 }
                 else
                 {

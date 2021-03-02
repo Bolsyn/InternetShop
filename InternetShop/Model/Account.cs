@@ -8,6 +8,6 @@ namespace InternetShop.Model
     {
         public int Id { get; set; }
         public string TelephoneNumber { get; set; }
-        public string Wallet { get; set; }
+        public double Wallet { get; set; }
     }
 }
