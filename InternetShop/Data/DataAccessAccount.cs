@@ -65,11 +65,11 @@ namespace InternetShop.Data
 
             var dataReader = command.ExecuteReader();
 
-            var users = new List<Account>();
+            var account = new List<Account>();
 
             while (dataReader.Read()) // до тех пор пока есть, что читать - читай!
             {
-                users.Add(new Account
+                account.Add(new Account
                 {
                     Id = int.Parse(dataReader["Id"].ToString()),
                     TelephoneNumber = dataReader["TelephoneNumber"].ToString(),
@@ -79,7 +79,28 @@ namespace InternetShop.Data
 
             dataReader.Close();
             command.Dispose();
-            return users;
+            return account;
+        }
+
+        public override Account Select(string entity)
+        {
+            var selectSqlScript = $"select * from Account where TelephoneNumber = {entity}";
+            var command = factory.CreateCommand();
+            command.Connection = connection;
+            command.CommandText = selectSqlScript;
+
+            var dataReader = command.ExecuteReader();
+
+            var account = new Account()
+            {
+                Id = int.Parse(dataReader["Id"].ToString()),
+                TelephoneNumber = dataReader["TelephoneNumber"].ToString(),
+                Wallet = double.Parse(dataReader["Wallet"].ToString())
+            };
+
+            dataReader.Close();
+            command.Dispose();
+            return account;
         }
 
         public override void Update(Account entity)
@@ -90,15 +111,6 @@ namespace InternetShop.Data
             {
                 command.Connection = connection;
                 command.CommandText = updateSqlScript;
-
-
-                var walletParameter = factory.CreateParameter();
-                walletParameter.DbType = System.Data.DbType.String;
-                walletParameter.Value = entity.Wallet;
-                walletParameter.ParameterName = "Wallet";
-
-                command.Parameters.Add(walletParameter);
-
                 command.ExecuteNonQuery();
             }
         }

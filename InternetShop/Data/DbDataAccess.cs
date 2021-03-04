@@ -24,7 +24,7 @@ namespace InternetShop.Data
         public abstract void Insert(T entity);
         public abstract void Update(T entity);
         public abstract void Delete(T entity);
-        public abstract ICollection<T> Select();
+        public abstract ICollection<T> Select(T entity);
         public void Dispose()
         {
             connection.Close();
