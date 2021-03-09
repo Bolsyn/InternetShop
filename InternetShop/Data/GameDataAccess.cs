@@ -9,134 +9,92 @@ namespace InternetShop.Data
     public class GameDataAccess : DbDataAccess<Game>
     {        
 
-        public override void Delete(Game game,string name)
+        public override void Delete(Game game)
         {
-            string deleteSqlScript = $"Delete from Game where Name = '{name}'";
-
-            using (var transaction = connection.BeginTransaction())
-            using (var command = factory.CreateCommand())
-            {
-                command.Connection = connection;
-                command.CommandText = deleteSqlScript;
-
-                try
-                {
-                    command.Transaction = transaction;
-
-                    var nameParameter = factory.CreateParameter();
-                    nameParameter.DbType = System.Data.DbType.String;
-                    nameParameter.Value = game.Name;
-                    nameParameter.ParameterName = "Name";
-
-                    command.Parameters.Add(nameParameter);                 
-
-                    command.ExecuteNonQuery();
-                    transaction.Commit();
-                }
-                catch (DbException)
-                {
-                    transaction.Rollback();
-                }
-                ExecuteTranaction(command);
-            }
+            var deleteSqlScript = "";
+            var command = factory.CreateCommand();
+            command.Connection = connection;
+            command.CommandText = deleteSqlScript;
+            command.ExecuteNonQuery();
+            command.Dispose();
+            
+                
         }
-
         public override void Insert(Game game)
         {
-            string insertSqlScript = "Insert into Game values (...)";
-
-            using (var transaction = connection.BeginTransaction())
-            using (var command = factory.CreateCommand())
-            {
-                command.Connection = connection;
-                command.CommandText = insertSqlScript;
-
-                try
-                {
-                    command.Transaction = transaction;
-
-                    var loginParameter = factory.CreateParameter();
-                    loginParameter.DbType = System.Data.DbType.String;
-                    loginParameter.Value = game.Name;
-                    loginParameter.ParameterName = "Name";
-
-                    command.Parameters.Add(loginParameter);
-
-                    var passwordParameter = factory.CreateParameter();
-                    passwordParameter.DbType = System.Data.DbType.String;
-                    passwordParameter.Value = game.Price;
-                    passwordParameter.ParameterName = "Price";
-
-                    command.Parameters.Add(passwordParameter);
-
-                    command.ExecuteNonQuery();
-                    transaction.Commit();
-                }
-                catch (DbException)
-                {
-                    transaction.Rollback();
-                }
-                ExecuteTranaction(command);
-            }
-
+            var insertSqlScript = "";
+            var command = factory.CreateCommand();
+            command.Connection = connection;
+            command.CommandText = insertSqlScript;
+            command.ExecuteNonQuery();
+            command.Dispose();
         }
 
-        public override ICollection<Game> Select()
+        public override ICollection<Game> Select(Game game)
         {
-            var selectSqlScript = $"select * from Game ";
+            var selectSqlScript = "";
             var command = factory.CreateCommand();
             command.Connection = connection;
             command.CommandText = selectSqlScript;
-
             var dataReader = command.ExecuteReader();
 
-            var users = new List<Game>();
-
+            var games = new List<Game>();
             while (dataReader.Read())
             {
-                users.Add(new Game
+                games.Add(new Game
                 {
                     Id = int.Parse(dataReader["Id"].ToString()),
                     Name = dataReader["Name"].ToString(),
-                    Price = double.Parse(dataReader["Price"].ToString())
+                    Price = double.Parse(dataReader["Price"].ToString()),
+                    Developer = dataReader["Developer"].ToString(),
+                    Description = dataReader["Description"].ToString(),
+                    Rating = double.Parse(dataReader["Name"].ToString())
+
                 });
             }
-
             dataReader.Close();
             command.Dispose();
-            return users;
-            
+
+            return games;
         }
 
-        public override void Update(Game game, string name)
+        public override ICollection<Game> Select(string selectSqlScript)
         {
-            string updateSqlScript = $"Update Game set Name = '{name}'";
 
-            using (var transaction = connection.BeginTransaction())
-            using (var command = factory.CreateCommand())
+            var command = factory.CreateCommand();
+            command.Connection = connection;
+            command.CommandText = selectSqlScript;
+            var dataReader = command.ExecuteReader();
+
+            var games = new List<Game>();
+            while (dataReader.Read())
             {
-                command.Connection = connection;
-                command.CommandText = updateSqlScript;
-
-                try
+                games.Add(new Game
                 {
-                    command.Transaction = transaction;
+                    Id = int.Parse(dataReader["Id"].ToString()),
+                    Name = dataReader["Name"].ToString(),
+                    Price = double.Parse(dataReader["Price"].ToString()),
+                    Developer = dataReader["Developer"].ToString(),
+                    Description = dataReader["Description"].ToString(),
+                    Rating = double.Parse(dataReader["Name"].ToString())
 
-                    var nameParameter = factory.CreateParameter();
-                    nameParameter.DbType = System.Data.DbType.String;
-                    nameParameter.Value = game.Name;
-                    nameParameter.ParameterName = "Name";
-                    command.Parameters.Add(nameParameter);
-
-                    command.ExecuteNonQuery();
-                    transaction.Commit();
-                }
-                catch (DbException)
-                {
-                    transaction.Rollback();
-                }
-                ExecuteTranaction(command);
+                });
             }
+            dataReader.Close();
+            command.Dispose();
+
+            return games;
         }
+
+        public override void Update(Game game)
+        {
+            var updateSqlScript = "";
+            var command = factory.CreateCommand();
+            command.Connection = connection;
+            command.CommandText = updateSqlScript;
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+    
     }
 }
